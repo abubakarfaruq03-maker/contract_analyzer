@@ -10,7 +10,7 @@
     "target": "ESNext",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node", "vitest/globals"]
   },
 
   /* Tell TS to look in ALL subfolders for .ts files */

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    /* Change rootDir to the current folder */
+    "rootDir": "./", 
+    "outDir": "./dist",
+
+    /* Keep your other settings (module, target, strict, etc.) */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ESNext",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["node"]
+  },
+
+  /* Tell TS to look in ALL subfolders for .ts files */
+  "include": ["**/*.ts"], 
+  "exclude": ["node_modules", "dist"]
+}

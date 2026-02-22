@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* 1. THEME DEFINITIONS */
+@theme {
+  --color-primary: var(--color-primary);
+  --color-background: var(--color-background);
+  --color-card: var(--color-card);
+  --color-main-text: var(--color-text);
+  --color-secondary-text: var(--color-text-secondary);
+  --color-border-line: var(--color-border);
+  --color-error: var(--color-error);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-input-bg: var(--color-input-bg);
+}
+
+/* 2. VARIABLE VALUES (Light Mode) */
+:root {
+  --color-primary: #11469e;
+  --color-background: #ffffff;
+  --color-card: #ffffff;
+  --color-text: #1f1f1f;
+  --color-text-secondary: #666666;
+  --color-border: #e0e0e0;
+  --color-error: #f44336;
+  --color-success: #4caf50;
+  --color-warning: #ff9800;
+  --color-input-bg: #f8f9fa;
+}
+
+/* 3. VARIABLE VALUES (Dark Mode) */
+.dark {
+  --color-background: #0f172a;
+  --color-card: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-border: #334155;
+  --color-input-bg: #1e293b;
+}
+
+/* 4. CUSTOM UTILITIES (The Scrollbar Killer) */
+@utility no-scrollbar {
+  /* Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* IE, Edge and Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 5. BASE STYLES */
+@layer base {
+  body {
+    @apply bg-background text-main-text;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+}

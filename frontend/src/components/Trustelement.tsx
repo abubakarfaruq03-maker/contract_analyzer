@@ -1,12 +1,16 @@
 import React from 'react';
 import { SiGoldmansachs, SiYcombinator, SiVisa, SiStripe, SiDeepl } from 'react-icons/si';
+interface TrustedCompany {
+    name: string;
+    Icon: React.ElementType;
+}
 
-const TRUSTED_COMPANIES = [
+const TRUSTED_COMPANIES: TrustedCompany[] = [
     { name: "Goldman Sachs", Icon: SiGoldmansachs },
     { name: "Y Combinator", Icon: SiYcombinator },
     { name: "Visa", Icon: SiVisa },
     { name: "Stripe", Icon: SiStripe },
-    { name: "Deel", Icon: SiDeepl },
+    { name: "Deepl", Icon: SiDeepl },
 ];
 
 export default function TrustElement() {

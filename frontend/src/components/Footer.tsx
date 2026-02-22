@@ -5,12 +5,10 @@ const Footer: React.FC = () => {
     <footer className="bg-background border-t border-border-line py-8 transition-colors">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
         
-        {/* Copyright */}
         <p className="text-sm text-secondary-text">
           Contract Analyzer, {new Date().getFullYear()}. All rights reserved.
         </p>
 
-        {/* Links */}
         <div className="flex gap-6">
           <a href="#" className="text-sm text-secondary-text hover:text-primary transition-colors">
             Terms of Service

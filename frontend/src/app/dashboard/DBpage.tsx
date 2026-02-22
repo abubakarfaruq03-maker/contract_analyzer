@@ -26,7 +26,6 @@ const Dashboard: React.FC = () => {
                     </div>
 
                     <div className="flex items-center gap-6">
-                        {/* Credit Indicator */}
                         <div>
                             <ThemeToggle />
 
@@ -43,7 +42,6 @@ const Dashboard: React.FC = () => {
                 </div>
             </nav>
 
-            {/* --- MAIN CONTENT --- */}
             <main className="max-w-6xl mx-auto p-6 md:p-10">
 
                 {/* Header Section */}
@@ -60,8 +58,6 @@ const Dashboard: React.FC = () => {
 
                 <UploadSection />
                 <RecentFiles />
-
-
 
             </main>
         </div>

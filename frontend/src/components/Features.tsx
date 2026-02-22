@@ -10,7 +10,6 @@ import {
  from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-// 2. Define exactly what a Feature looks like
 interface Feature {
   title: string;
   description: string;
@@ -50,7 +49,6 @@ const features: Feature[] = [
   },
 ];
 
-// 3. Modern React practice: Define props interface (even if empty)
 interface FeaturesProps {}
 
 const Features: React.FC<FeaturesProps> = () => {
@@ -73,7 +71,7 @@ const Features: React.FC<FeaturesProps> = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map(({ title, description, icon: Icon }, index) => (
             <div
-              key={title}
+              key={index}
               className="group p-8 rounded-3xl border border-border-line bg-card transition-all duration-500 hover:scale-[1.02] hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5 flex flex-col justify-between"
             >
               <div>

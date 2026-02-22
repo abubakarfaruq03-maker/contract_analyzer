@@ -9,8 +9,6 @@ export default function Home() {
         
         <div className="min-h-screen w-full bg-background bg-[url('/images/bg.png')]  bg-no-repeat">
             <Navbar />
-            
-            
             <div className="relative z-10">
                 <Hero />
                 <Features />

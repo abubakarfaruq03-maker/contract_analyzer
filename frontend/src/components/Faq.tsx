@@ -8,6 +8,7 @@ interface FAQItem {
   icon: LucideIcon;
 }
 
+
 const faqs: FAQItem[] = [
   {
     icon: Scale,

@@ -50,7 +50,7 @@ const FAQ: React.FC = () => {
   };
 
   return (
-    <section className="bg-background py-24 transition-colors">
+    <section className="bg-background py-24 transition-colors" id="faq">
       <div className="max-w-4xl mx-auto px-6 flex flex-col items-center">
         
         {/* Top Centered Icon */}

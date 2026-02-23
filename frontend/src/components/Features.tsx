@@ -53,7 +53,7 @@ interface FeaturesProps {}
 
 const Features: React.FC<FeaturesProps> = () => {
   return (
-    <section className="bg-background py-24 transition-colors duration-300">
+    <section className="bg-background py-24 transition-colors duration-300" id="features">
       <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center">
         
         <div className="max-w-3xl mb-16 flex flex-col text-center items-center">

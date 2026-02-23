@@ -25,9 +25,11 @@ export default function Hero() {
               Start analyzing
             </button>
             
-            <button className="px-8 py-2 bg-transparent border border-border-line text-main-text rounded-full font-bold text-lg hover:bg-input-bg transition-all">
-              View Demo
+          <a href="#faq">
+              <button className="px-8 py-2 bg-transparent border border-border-line text-main-text rounded-full font-bold text-lg hover:bg-input-bg transition-all">
+              Learn more
             </button>
+          </a>
           </div>
 
           <TrustElement />

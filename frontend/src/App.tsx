@@ -10,7 +10,8 @@ const App = () => {
   return (
 <div className="min-h-screen w-screen">
  <Routes>
-<Route path="/" element={<Dashboard />} />
+<Route path="/" element={<Home />} />
+<Route path="/dashboard" element={<Dashboard />} />
         
         {/* The Workspace - handles both new uploads and historical IDs */}
         <Route path="/analyze" element={<AnalysisWorkspace />} />

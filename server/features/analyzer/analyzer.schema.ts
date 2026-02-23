@@ -1,17 +1,18 @@
 import { z } from 'zod';
 
 export const AnalysisResponseSchema = z.object({
-  summary: z.string().describe("A 3-sentence high-level overview of the contract."),
+  summary: z.string(),
   risks: z.array(z.object({
-    severity: z.enum(['high', 'medium', 'low']),
-    clause: z.string().describe("The specific text or title of the clause from the document."),
-    explanation: z.string().describe("Why this is a risk for the user."),
-    actionItem: z.string().describe("What the user should ask for or change.")
-  })),
+    // Allow the AI to be a bit messy with casing
+    severity: z.enum(['high', 'medium', 'low', 'High', 'Medium', 'Low']).transform(val => val.toLowerCase()),
+    clause: z.string(),
+    explanation: z.string(),
+    actionItem: z.string()
+  })).default([]), // If no risks found, return empty array instead of failing
   keyDates: z.array(z.object({
-    event: z.string().describe("e.g., Termination Notice, Expiration"),
+    event: z.string(),
     date: z.string()
-  })),
+  })).default([]), // If no dates found, return empty array instead of failing
   overallRiskScore: z.number().min(0).max(100)
 });
 

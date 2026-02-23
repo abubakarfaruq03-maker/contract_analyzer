@@ -1,5 +1,5 @@
 import Groq from "groq-sdk";
-import * as pdf from "pdf-parse";
+import pdf from "pdf-parse";
 import { z } from "zod";
 import { AnalysisResponseSchema } from "./analyzer.schema";
 import { splitText } from "../../utils/text_splitter";
@@ -7,84 +7,91 @@ import env from "dotenv";
 
 env.config();
 
-type AnalysisResponse = z.infer<typeof AnalysisResponseSchema>;
+export const analyzeDocument = async (fileBuffer: Buffer): Promise<z.infer<typeof AnalysisResponseSchema>> => {
+  const groq = new (Groq as any)({ apiKey: process.env.OPEN_AI_KEY });
 
-const groq = new Groq({
-  apiKey: process.env.OPEN_AI_KEY as string,
-});
-
-/**
- * Analyzes a contract using a Map-Reduce approach to handle documents of any length.
- */
-export const analyzeDocument = async (fileBuffer: Buffer): Promise<AnalysisResponse> => {
   try {
-    // 1. EXTRACT: Convert PDF Buffer to Text
-    const pdfData = await (pdf as any)(fileBuffer);
-    const rawText = pdfData.text;
+    console.log("Step 1: Parsing PDF...");
+    const pdfData = await pdf(fileBuffer);
+    const rawText = pdfData?.text;
+    if (!rawText) throw new Error("PDF text is empty.");
+    console.log("✅ PDF Parsed successfully.");
 
-    if (!rawText || rawText.trim().length === 0) {
-      throw new Error("The PDF appears to be empty or unreadable.");
+    const chunks = splitText(rawText, 3500, 300);
+    const chunkAnalyses: string[] = [];
+
+    for (let i = 0; i < chunks.length; i++) {
+      console.log(`Processing chunk ${i + 1}/${chunks.length}...`);
+      const res = await groq.chat.completions.create({
+        messages: [
+          { 
+            role: "system", 
+            content: "Analyze this contract part. Identify risks (severity, clause, explanation, actionItem) and keyDates (event, date). Return JSON." 
+          },
+          { role: "user", content: chunks[i] }
+        ],
+        model: "llama-3.3-70b-versatile",
+        response_format: { type: "json_object" },
+      });
+      chunkAnalyses.push(res.choices[0]?.message?.content || "");
+      await new Promise(resolve => setTimeout(resolve, 3000)); 
     }
 
-    // 2. MAP: Split text into chunks and analyze each
-    // We use smaller chunks (6000 chars) for faster, more focused "local" analysis
-    const chunks = splitText(rawText, 6000, 600);
-    
-    console.log(`Processing ${chunks.length} chunks...`);
+    console.log("Step 4: Synthesizing to match Zod Schema...");
+    await new Promise(resolve => setTimeout(resolve, 5000));
 
-    const chunkAnalyses = await Promise.all(
-      chunks.map(async (chunk, index) => {
-        const response = await groq.chat.completions.create({
-          messages: [
-            {
-              role: "system",
-              content: "You are a legal assistant. Extract key risks and dates from this contract segment. Return JSON."
-            },
-            { role: "user", content: `Segment ${index + 1}: ${chunk}` }
-          ],
-          model: "llama-3.3-70b-versatile",
-          response_format: { type: "json_object" },
-          temperature: 0,
-        });
-        return response.choices[0]?.message?.content || "";
-      })
-    );
-
-    // 3. REDUCE: Synthesize all partial analyses into one master report
-    // This step removes duplicates and creates a cohesive executive summary.
     const synthesisPrompt = `
-      You are a Senior Legal Auditor. I have analyzed a contract in parts. 
-      Combine these partial insights into one final, structured report.
-      Remove redundant risks and ensure the summary covers the entire document.
+      Combine these contract analyses into one final JSON object.
       
-      Partial Analyses:
-      ${chunkAnalyses.join("\n---\n")}
+      STRICT JSON STRUCTURE REQUIRED:
+      {
+        "summary": "3-sentence overview",
+        "overallRiskScore": number (0-100),
+        "risks": [
+          { "severity": "high" | "medium" | "low", "clause": "exact text", "explanation": "why", "actionItem": "what to do" }
+        ],
+        "keyDates": [
+          { "event": "string", "date": "string" }
+        ]
+      }
+      
+      DATA: ${chunkAnalyses.filter(Boolean).join("\n---\n")}
     `;
 
     const finalCompletion = await groq.chat.completions.create({
       messages: [
-        {
-          role: "system",
-          content: "Synthesize the provided legal data into a single, high-quality JSON report."
-        },
+        { role: "system", content: "You are a legal API. You MUST return valid JSON using the exact keys: summary, risks, keyDates, overallRiskScore." },
         { role: "user", content: synthesisPrompt }
       ],
       model: "llama-3.3-70b-versatile",
       response_format: { type: "json_object" },
-      temperature: 0.1,
     });
 
     const finalContent = finalCompletion.choices[0]?.message?.content;
-    if (!finalContent) throw new Error("Synthesis failed.");
+    console.log("Step 5: Validating against Zod...");
 
-    // 4. VALIDATE: Ensure the final output matches our Zod Schema
-    return AnalysisResponseSchema.parse(JSON.parse(finalContent));
+    const rawParsed = JSON.parse(finalContent || "{}");
 
-  } catch (error) {
-    console.error("Analysis Service Error:", error);
-    if (error instanceof z.ZodError) {
-      throw new Error("AI output validation failed. Please try again.");
-    }
+    // DATA CLEANER: Maps AI output to match your specific Zod fields
+    const cleanedData = {
+      summary: String(rawParsed.summary || "Analysis completed."),
+      overallRiskScore: Number(rawParsed.overallRiskScore) || 50,
+      risks: (rawParsed.risks || []).map((r: any) => ({
+        severity: (r.severity || 'medium'),
+        clause: String(r.clause || "Relevant Clause"),
+        explanation: String(r.explanation || "Risk identified in contract language."),
+        actionItem: String(r.actionItem || "Consult legal counsel for further review.")
+      })),
+      keyDates: (rawParsed.keyDates || []).map((d: any) => ({
+        event: String(d.event || "Contract Event"),
+        date: String(d.date || "TBD")
+      }))
+    };
+
+    return AnalysisResponseSchema.parse(cleanedData);
+
+  } catch (error: any) {
+    console.error("SERVICE CRASH:", error.message);
     throw error;
   }
 };

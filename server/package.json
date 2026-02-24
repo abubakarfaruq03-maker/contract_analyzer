@@ -31,7 +31,7 @@
     "@types/pdf-parse": "^1.1.5",
     "@types/pg": "^8.16.0",
     "nodemon": "^3.1.14",
-    "tsx": "^4.19.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   }

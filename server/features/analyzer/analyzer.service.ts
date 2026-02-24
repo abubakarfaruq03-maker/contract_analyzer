@@ -1,5 +1,8 @@
 import Groq from "groq-sdk";
-import pdf from "pdf-parse";
+import pdf from 'pdf-parse/lib/pdf-parse.js';
+
+// If that fails, go back to the standard import but wrap the call:
+// import pdf from 'pdf-parse';
 import { z } from "zod";
 import { AnalysisResponseSchema } from "./analyzer.schema.js";
 import { splitText } from "../../utils/text_splitter.js";

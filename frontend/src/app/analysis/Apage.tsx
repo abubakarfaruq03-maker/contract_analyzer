@@ -30,7 +30,7 @@ const AnalysisWorkspace: React.FC = () => {
     // Header
     doc.setFontSize(22);
     doc.setTextColor(63, 81, 181); // Primary Color
-    doc.text("LexiGuard Audit Report", 14, 20);
+    doc.text("LexGuard  Report", 14, 20);
     
     doc.setFontSize(10);
     doc.setTextColor(100);
@@ -139,7 +139,7 @@ const AnalysisWorkspace: React.FC = () => {
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <span className="font-black text-[10px] uppercase tracking-widest text-primary flex items-center gap-1.5">
-                <ShieldCheck size={12} /> LexiGuard Audit
+                <ShieldCheck size={12} /> LexGuard
               </span>
               
               {syncStatus !== 'idle' && (

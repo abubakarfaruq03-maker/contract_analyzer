@@ -1,0 +1,12 @@
+{
+  "name": "lexiguard-monorepo",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:server\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

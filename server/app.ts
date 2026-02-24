@@ -9,8 +9,14 @@ const app = express();
 
 // 1.  Middlewares
 app.use(helmet()); 
-app.use(cors());   
-app.use(express.json({ limit: '10mb' })); 
+app.use(cors({
+  // Replace with your actual Vercel URL after deployment
+  origin: process.env.NODE_ENV === 'production' 
+    ? 'https://your-frontend-name.vercel.app' 
+    : 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));app.use(express.json({ limit: '10mb' })); 
 
 // 2. Feature Routes
 app.use('/api/auth', authRoutes);         

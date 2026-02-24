@@ -70,8 +70,8 @@ export default function Login() {
         <div className="inline-flex p-4 rounded-3xl bg-primary/10 border border-primary/20 mb-2">
           <Shield className="text-primary w-10 h-10" />
         </div>
-        <h1 className="text-3xl font-black tracking-tighter italic">LEXIGUARD</h1>
-        <p className="text-secondary-text text-[10px] font-bold uppercase tracking-[0.3em]">AI Legal Audit Portal</p>
+        <h1 className="text-3xl font-black tracking-tighter italic">LEXGUARD</h1>
+        <p className="text-secondary-text text-[10px] font-bold uppercase tracking-[0.3em]">Contract Analyzer</p>
       </div>
 
       <form 
@@ -116,12 +116,12 @@ export default function Login() {
         </div>
 
         <div className="mt-8 text-center border-t border-border-line pt-6">
-          <p className="text-secondary-text text-[11px] font-medium">New Auditor?</p>
+          <p className="text-secondary-text text-[11px] font-medium">Your First Time?</p>
           <Link 
             to="/register" 
             className="text-primary font-black uppercase text-[11px] tracking-widest hover:underline mt-2 block"
           >
-            Request Credentials
+            Create New Account
           </Link>
         </div>
       </form>

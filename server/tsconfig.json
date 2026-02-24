@@ -10,10 +10,12 @@
     "target": "ESNext",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["node", "vitest/globals"]
+    "types": ["node", "vitest/globals"],
+    
+    
   },
 
   /* Tell TS to look in ALL subfolders for .ts files */
-  "include": ["**/*.ts"], 
+  "include": ["**/*.ts", "types/**/*.d.ts", "features/analyzer/analyzer.repository.ts"], 
   "exclude": ["node_modules", "dist"]
 }

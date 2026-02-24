@@ -1,10 +1,17 @@
-import { Multer } from 'multer';
+import * as express from 'express';
 
 declare global {
   namespace Express {
     interface Request {
-      file?: Multer.File;
-      files?: Multer.File[] | { [fieldname: string]: Multer.File[] };
+      // Multer properties
+      file?: Express.Multer.File;
+      files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
+      
+      // Your custom Auth property
+      user?: {
+        userId: string;
+        email: string;
+      };
     }
   }
 }

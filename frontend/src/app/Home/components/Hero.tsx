@@ -1,4 +1,5 @@
 import TrustElement from "../../../components/Trustelement";
+import { Link } from "react-router-dom";
 export default function Hero() {
   return (
     <section className="relative overflow-hidden py-20 lg:py-32 transition-colors duration-300">
@@ -21,9 +22,12 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 ">
+            <Link to="/login">
             <button className="px-8 py-2 bg-main-text text-white dark:text-background rounded-full font-bold text-lg hover:opacity-90 hover:scale-105 transition-all shadow-lg shadow-primary/25">
               Start analyzing
             </button>
+            </Link>
+
             
           <a href="#faq">
               <button className="px-8 py-2 bg-transparent border border-border-line text-main-text rounded-full font-bold text-lg hover:bg-input-bg transition-all">

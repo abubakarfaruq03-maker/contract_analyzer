@@ -1,50 +1,62 @@
 import { get, set, del, keys } from 'idb-keyval';
 
+export interface AnalysisRecord {
+  id: string;          // Local unique ID
+  serverId?: string;   // PostgreSQL ID
+  fileName: string;
+  results: any;        // This MUST be an object for the backend sync
+  file?: File | Blob;  // Local PDF storage
+  timestamp: string;
+  isSynced: boolean;
+}
+
 /**
- * 1. Save Analysis
- * Storing the 'file' (Blob/File object) directly in IndexedDB is supported 
- * and much better than storing Base64 strings (which are 33% larger).
+ * Saves to IndexedDB. 
+ * Separates 'file' from AI 'results' to keep data structured.
  */
-export const saveAnalysis = async (fileName: string, data: any) => {
+export const saveAnalysis = async (fileName: string, data: any): Promise<string> => {
   const id = `${fileName}-${Date.now()}`;
-  await set(id, {
-    ...data,
+  
+  // Extract file if present, treat everything else as results
+  const { file, ...results } = data;
+
+  const record: AnalysisRecord = {
     id,
     fileName,
-    timestamp: new Date().toISOString()
-  });
+    results: results, // Structured exactly for the backend /save route
+    file: file,
+    timestamp: new Date().toISOString(),
+    isSynced: false, 
+  };
+
+  await set(id, record);
   return id;
 };
 
-/**
- * 2. Get Single Analysis by ID
- * Used by the /analyze/:id route to load historical data.
- */
-export const getAnalysisById = async (id: string) => {
-  return await get(id);
+export const markAsSynced = async (localId: string, serverId: string) => {
+  const item = await get<AnalysisRecord>(localId);
+  if (item) {
+    await set(localId, { ...item, isSynced: true, serverId });
+  }
 };
 
-/**
- * 3. Get All Saved Analyses
- * Fetches everything for the Dashboard "Recent Intelligence" table.
- */
-export const getAllAnalyses = async () => {
+export const getUnsyncedAnalyses = async (): Promise<AnalysisRecord[]> => {
+  const all = await getAllAnalyses();
+  return all.filter(item => !item.isSynced);
+};
+
+export const getAllAnalyses = async (): Promise<AnalysisRecord[]> => {
   const allKeys = await keys();
-  const allData = await Promise.all(
-    allKeys.map(key => get(key))
-  );
+  const allData = await Promise.all(allKeys.map(key => get<AnalysisRecord>(key)));
   
-  // Filter out any undefined results and sort by newest
-  return allData
-    .filter(item => item !== undefined)
-    .sort((a, b) => 
-      new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-    );
+  return (allData.filter(item => item !== undefined) as AnalysisRecord[])
+    .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 };
 
-/**
- * 4. Delete Analysis
- */
+export const getAnalysisById = async (id: string): Promise<AnalysisRecord | undefined> => {
+  return await get<AnalysisRecord>(id);
+};
+
 export const deleteAnalysis = async (id: string) => {
   await del(id);
 };

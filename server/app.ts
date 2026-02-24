@@ -12,7 +12,7 @@ app.use(helmet());
 app.use(cors({
   // Replace with your actual Vercel URL after deployment
   origin: process.env.NODE_ENV === 'production' 
-    ? 'https://contract-analyzer-beta-sooty.vercel.app/' 
+    ? 'https://contract-analyzer-beta-sooty.vercel.app' 
     : 'http://localhost:5173',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true

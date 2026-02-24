@@ -1,8 +1,8 @@
 import Groq from "groq-sdk";
 import pdf from "pdf-parse";
 import { z } from "zod";
-import { AnalysisResponseSchema } from "./analyzer.schema";
-import { splitText } from "../../utils/text_splitter";
+import { AnalysisResponseSchema } from "./analyzer.schema.js";
+import { splitText } from "../../utils/text_splitter.js";
 import env from "dotenv";
 
 env.config();

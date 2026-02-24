@@ -1,4 +1,4 @@
-import db from '../../routes/db';
+import db from '../../routes/db.js';
 export const saveAnalysisToDb = async (userId: string, fileName: string, analysisData: any) => {
   const { summary, overallRiskScore, risks, keyDates } = analysisData;
 

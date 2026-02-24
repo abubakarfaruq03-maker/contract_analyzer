@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { splitText } from '../utils/text_splitter';
+import { splitText } from '../utils/text_splitter.js';
 
 describe('Text Splitter Utility', () => {
   it('should split long text into smaller chunks', () => {

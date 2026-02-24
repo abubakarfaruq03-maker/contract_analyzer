@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import analyzerRoutes from './features/analyzer/analyzer.route';
-import authRoutes from './routes/auth'
-import { errorHandler } from './middleware/error.middleware';
+import analyzerRoutes from './features/analyzer/analyzer.route.js';
+import authRoutes from './routes/auth.js'
+import { errorHandler } from './middleware/error.middleware.js';
 
 const app = express();
 

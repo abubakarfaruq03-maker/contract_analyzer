@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { analyzeDocument } from './analyzer.service';
-import { saveAnalysisToDb } from './analyzer.repository';
+import { analyzeDocument } from './analyzer.service.js';
+import { saveAnalysisToDb } from './analyzer.repository.js';
 
 /**
  * Interface to handle typed user and file data from middlewares

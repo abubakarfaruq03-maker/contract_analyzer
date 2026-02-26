@@ -8,7 +8,6 @@ import { errorHandler } from './middleware/error.middleware.js';
 const app = express();
 
 // 1.  Middlewares
-app.use(helmet()); 
 app.use(cors({
   // Replace with your actual Vercel URL after deployment
   origin: process.env.NODE_ENV === 'production' 
@@ -17,6 +16,8 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));app.use(express.json({ limit: '10mb' })); 
+app.use(helmet()); 
+
 
 // 2. Feature Routes
 app.use('/api/auth', authRoutes);         

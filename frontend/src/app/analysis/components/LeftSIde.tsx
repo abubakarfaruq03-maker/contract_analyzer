@@ -7,7 +7,7 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 interface LeftSideProps {
-  fileUrl: string | null; // This will be a blob URL
+  fileUrl: string | null; 
 }
 
 const LeftSide: React.FC<LeftSideProps> = ({ fileUrl }) => {

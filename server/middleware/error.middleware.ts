@@ -13,7 +13,6 @@ export const errorHandler = (
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
 
-  // In production, you'd want to hide the stack trace from the user
   console.error(`[Error] ${statusCode} - ${message}`);
 
   res.status(statusCode).json({

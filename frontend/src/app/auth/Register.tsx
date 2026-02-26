@@ -40,7 +40,6 @@ export default function Register() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4 font-sans text-main-text">
-      {/* Brand Identity */}
       <div className="mb-8 text-center space-y-2">
         <div className="inline-flex p-4 rounded-3xl bg-primary/10 border border-primary/20 mb-2">
           <Shield className="text-primary w-10 h-10" />
@@ -113,7 +112,6 @@ export default function Register() {
         </div>
       </form>
 
-      {/* Trust Badges */}
       <div className="mt-8 grid grid-cols-2 gap-4 opacity-50">
         <div className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-tighter text-secondary-text">
           <CheckCircle2 size={10} className="text-primary" /> End-to-End Encryption

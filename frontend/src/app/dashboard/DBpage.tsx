@@ -64,7 +64,6 @@ const Dashboard: React.FC = () => {
                             <Bell size={20} />
                         </button>
                         
-                        {/* Profile Dropdown */}
                         <div className="relative" ref={menuRef}>
                             <button 
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}

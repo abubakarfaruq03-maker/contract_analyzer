@@ -29,7 +29,7 @@ const AnalysisWorkspace: React.FC = () => {
     
     // Header
     doc.setFontSize(22);
-    doc.setTextColor(63, 81, 181); // Primary Color
+    doc.setTextColor(63, 81, 181); 
     doc.text("LexGuard  Report", 14, 20);
     
     doc.setFontSize(10);
@@ -37,11 +37,10 @@ const AnalysisWorkspace: React.FC = () => {
     doc.text(`Document: ${data.fileName || 'Contract'}`, 14, 30);
     doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 35);
 
-    // Prepare Data - Fixes [object Object] issue
+    // Prepare Data for Export
     const formattedRisks = Array.isArray(data.risks)
       ? data.risks.map((r: any) => {
           if (typeof r === 'string') return `• ${r}`;
-          // Extract description/risk from object, fallback to stringified object if unknown
           return `• ${r.risk || r.description || r.message || JSON.stringify(r)}`;
         }).join('\n\n')
       : 'No major risks identified';
@@ -78,7 +77,7 @@ const AnalysisWorkspace: React.FC = () => {
       if (id) {
         const cachedData = await getAnalysisById(id);
         if (cachedData) {
-          setData(cachedData.results || cachedData); // Support nested or flat data
+          setData(cachedData.results || cachedData); 
           if (cachedData.file) setFileUrl(URL.createObjectURL(cachedData.file));
           setSyncStatus(cachedData.isSynced ? 'synced' : 'idle');
           setIsInitialLoading(false);

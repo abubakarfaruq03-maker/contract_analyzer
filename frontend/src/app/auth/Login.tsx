@@ -28,7 +28,6 @@ export default function Login() {
       const data: AuthResponse = await res.json();
       
       if (res.ok && data.token) {
-        // Professional LexiGuard Toast
         toast.custom((t) => (
           <div className={`${
             t.visible ? 'animate-in fade-in zoom-in' : 'animate-out fade-out zoom-out'

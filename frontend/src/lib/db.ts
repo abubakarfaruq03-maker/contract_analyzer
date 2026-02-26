@@ -4,7 +4,7 @@ export interface AnalysisRecord {
   id: string;          // Local unique ID
   serverId?: string;   // PostgreSQL ID
   fileName: string;
-  results: any;        // This MUST be an object for the backend sync
+  results: any;        // object structured exactly for backend /save route
   file?: File | Blob;  // Local PDF storage
   timestamp: string;
   isSynced: boolean;
@@ -12,7 +12,6 @@ export interface AnalysisRecord {
 
 /**
  * Saves to IndexedDB. 
- * Separates 'file' from AI 'results' to keep data structured.
  */
 export const saveAnalysis = async (fileName: string, data: any): Promise<string> => {
   const id = `${fileName}-${Date.now()}`;

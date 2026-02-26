@@ -12,7 +12,7 @@ const fileFilter = (req: any, file: any, cb: any) => {
   }
 };
 
-// 3. Export the middleware with limits
+// 3. Exporting the middleware with limits
 export const upload = multer({
   storage,
   fileFilter,

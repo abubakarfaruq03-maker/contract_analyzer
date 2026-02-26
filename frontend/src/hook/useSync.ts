@@ -14,7 +14,7 @@ export const useSync = () => {
 
     for (const analysis of unsynced) {
       try {
-        // We are sending JSON, so the backend route MUST NOT use upload.single()
+        // sending JSON
         const response = await axios.post(
           `${import.meta.env.VITE_API_BASE_URL}/api/analyzer/save`,
           {
@@ -24,7 +24,7 @@ export const useSync = () => {
           { 
             headers: { 
               Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json' // Explicitly tell backend it's JSON
+              'Content-Type': 'application/json' 
             } 
           }
         );

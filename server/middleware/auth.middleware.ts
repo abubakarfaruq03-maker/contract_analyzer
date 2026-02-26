@@ -1,10 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-/**
- * Extending the Express Request type so TypeScript 
- * recognizes the 'user' property we attach.
- */
 export interface AuthRequest extends Request {
   user?: {
     userId: string;

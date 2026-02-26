@@ -2,9 +2,7 @@ import { Request, Response } from 'express';
 import { analyzeDocument } from './analyzer.service.js';
 import { saveAnalysisToDb } from './analyzer.repository.js';
 
-/**
- * Interface to handle typed user and file data from middlewares
- */
+
 interface AuthenticatedRequest extends Request {
   user?: {
     userId: string;
@@ -39,7 +37,6 @@ export const handleAnalysis = async (req: Request, res: Response) => {
         );
       } catch (dbError) {
         console.error("Database Save Error during analysis:", dbError);
-        // We still return results even if DB fails
       }
     }    
 
@@ -54,7 +51,6 @@ export const handleAnalysis = async (req: Request, res: Response) => {
 /**
  * ROUTE: POST /api/analyzer/save
  * Purpose: Takes existing JSON results (from useSync.ts) and saves to DB.
- * No AI or Multer involved.
  */
 export const saveAnalysis = async (req: Request, res: Response) => {
   const authReq = req as AuthenticatedRequest;
